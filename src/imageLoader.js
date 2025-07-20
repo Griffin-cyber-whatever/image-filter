@@ -1,67 +1,43 @@
+import {drawOnCanvas} from "./ui.js";
 export let loadedData = {};
-export function image_loader() {
-  const fileRadio = document.getElementById("switch-file");
 
-  if (fileRadio.checked) {
-    const fileInput = document.getElementById("file-input");
-    const files = fileInput.files; // Get files from input element
+export async function image_loader() {
+  const fileInput = document.getElementById("file-input");
+  const urlInput  = document.getElementById("url-input");
+  const canvasId = "original-canvas";
 
-    if (!files || files.length === 0) {
-      // Check if files exist and array not empty
-      console.log("⚠️ invalid data: no file selected");
+  if (document.getElementById("switch-file").checked) {
+    if (!fileInput.files.length) {
+      console.warn("No file selected");
       return;
     }
-    const content = loadFile(files[0]);
-    console.log(content);
+    const dataUrl = await loadFile(fileInput.files[0]);
+    loadedData = { type: "file", content: dataUrl };
   } else {
-    const urlRow = document.getElementById("url-input");
-    const value = urlRow.value;
-    if (!value) {
-      // display invalid data
-      console.log("⚠️ invalid data: no url typed");
+    const url = urlInput.value.trim();
+    if (!url) {
+      console.warn("No URL entered");
       return;
     }
-    const content = loadFromUrl(value);
-    loadedData = {type:"file", content:content};
+    const blobUrl = await loadFromUrl(url);
+    loadedData = { type: "url", content: blobUrl };
   }
+  drawOnCanvas(canvasId, loadedData)
 }
 
 function loadFile(file) {
-    const canvas = document.getElementById("original-canvas");
-    const ctx = canvas.getContext('2d');
-
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        // when reading finishes:
-        reader.onload = () => {
-            const image = new Image();
-            image.onload = function(){
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(image, 0, 0);
-            }
-            image.src = reader.result;
-            resolve(reader.result)
-        };
-        reader.onerror = () => reject(reader.error);
-
-        const content = reader.readAsDataURL(file);
-        loadedData = {type:"url", content:content};
-    });
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload  = () => resolve(reader.result);            // dataURL
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
 }
 
 async function loadFromUrl(url) {
-    const canvas = document.getElementById("original-canvas");
-    const ctx = canvas.getContext('2d');
-    const image = new Image();
-    image.onload = function(){
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(image, 0, 0);
-    }
-    image.src = url; 
-
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(res.statusText);
-    const blob = await res.blob();
-    return URL.createObjectURL(blob);
+  // We draw the image in main.js or UI module; here just return a blob URL
+  const res  = await fetch(url);
+  if (!res.ok) throw new Error(res.statusText);
+  const blob = await res.blob();
+  return URL.createObjectURL(blob);
 }

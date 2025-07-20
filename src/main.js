@@ -25,4 +25,4 @@ const apply_image = document.getElementById("apply-image");
 apply_image.addEventListener('click', image_loader)
 
 const apply_filters = document.getElementById("apply-filters");
-apply_filters.addEventListener('click', filter_processor);
+apply_filters.addEventListener('click', filter_processor(loadedData));
