@@ -1,35 +1,35 @@
-import {drawOnCanvas} from "./ui.js";
 export let loadedData = {};
 
 export async function image_loader() {
+  const canvas = document.getElementById("original-canvas");
+  const ctx    = canvas.getContext("2d");
+  
   const fileInput = document.getElementById("file-input");
   const urlInput  = document.getElementById("url-input");
-  const canvasId = "original-canvas";
+  const useFile   = document.getElementById("switch-file").checked;
 
-  if (document.getElementById("switch-file").checked) {
+  if (useFile) {
     if (!fileInput.files.length) {
-      console.warn("No file selected");
+      alert("Choose a file first");
       return;
     }
-    const dataUrl = await loadFile(fileInput.files[0]);
-    loadedData = { type: "file", content: dataUrl };
+    loadedData = { type: "file", content: await readFileAsDataURL(fileInput.files[0]) };
   } else {
     const url = urlInput.value.trim();
     if (!url) {
       console.warn("No URL entered");
       return;
     }
-    const blobUrl = await loadFromUrl(url);
-    loadedData = { type: "url", content: blobUrl };
+    loadedData = { type: "url", content: await loadFromUrl(url) };
   }
-  drawOnCanvas(canvasId, loadedData)
+  await drawToCanvas(loadedData.content, ctx);
 }
 
-function loadFile(file) {
-  return new Promise((resolve, reject) => {
+function readFileAsDataURL(file) {
+  return new Promise((res, rej) => {
     const reader = new FileReader();
-    reader.onload  = () => resolve(reader.result);            // dataURL
-    reader.onerror = () => reject(reader.error);
+    reader.onload  = () => res(reader.result);
+    reader.onerror = () => rej(reader.error);
     reader.readAsDataURL(file);
   });
 }
@@ -40,4 +40,16 @@ async function loadFromUrl(url) {
   if (!res.ok) throw new Error(res.statusText);
   const blob = await res.blob();
   return URL.createObjectURL(blob);
+}
+
+export function drawToCanvas(src, ctx) {
+  return new Promise(res => {
+    const img = new Image();
+    img.onload = () => {
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.drawImage(img, 0, 0, ctx.canvas.width, ctx.canvas.height);
+      res();
+    };
+    img.src = src;
+  });
 }

@@ -1,5 +1,5 @@
 import {image_loader, loadedData} from "./imageLoader.js"
-import {filter_processor} from "./imageProcessors.js"
+import {applyFilters} from "./imageProcessors.js"
 
 // input part
 const fileRadio = document.getElementById("switch-file");
@@ -22,7 +22,9 @@ urlRadio.addEventListener("change", updateSourceInput);
 
 
 const apply_image = document.getElementById("apply-image");
-apply_image.addEventListener('click', image_loader)
+apply_image.addEventListener('click', async e => {
+  await image_loader();
+})
 
 const apply_filters = document.getElementById("apply-filters");
-apply_filters.addEventListener('click', filter_processor(loadedData));
+apply_filters.addEventListener('click', () => applyFilters(loadedData.content));
