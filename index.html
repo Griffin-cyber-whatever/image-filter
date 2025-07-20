@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Processor</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "main/": "./src/"
+        }
+      }
+    </script>
+    <script type="module">
+      import "main/main.js";
+    </script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Image Processor</h1>
+    </header>
+    <main>
+      <section aria-labelledby="load-section">
+        <h2 id="load-section">Load Image</h2>
+        <form id="load-form">
+          <fieldset>
+            <div class="source-switch-row">
+              <label>
+                <input
+                  type="radio"
+                  name="source-type"
+                  value="file"
+                  id="switch-file"
+                  checked
+                />
+                File
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="source-type"
+                  value="url"
+                  id="switch-url"
+                />
+                URL
+              </label>
+            </div>
+            <div class="source-row" id="file-row">
+              <label for="file-input">File:</label>
+              <input type="file" id="file-input" />
+            </div>
+            <div class="source-row" id="url-row" style="display: none">
+              <label for="url-input">URL:</label>
+              <input type="url" id="url-input" placeholder="Paste image URL" />
+            </div>
+          </fieldset>
+          <button type="button" id="apply-image">Load</button>
+        </form>
+      </section>
+
+      <section aria-labelledby="original-section">
+        <h2 id="original-section">Original Image</h2>
+        <canvas id="original-canvas" width="400" height="300"></canvas>
+      </section>
+
+      <section aria-labelledby="filters-section">
+        <h2 id="filters-section">Filters</h2>
+        <form id="filter-form">
+          <fieldset>
+            <legend>Choose Filters</legend>
+            <label>
+              <input type="checkbox" id="grayscale" />
+              Grayscale
+            </label>
+            <label>
+              <input type="checkbox" id="invertColors" />
+              Invert Colors
+            </label>
+          </fieldset>
+          <button type="button" id="apply-filters">Apply</button>
+        </form>
+      </section>
+
+      <section aria-labelledby="processed-section">
+        <h2 id="processed-section">Processed Image</h2>
+        <canvas id="processed-canvas" width="400" height="300"></canvas>
+      </section>
+    </main>
+
+    <script></script>
+  </body>
+</html>

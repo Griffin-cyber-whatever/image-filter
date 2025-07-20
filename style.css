@@ -1,0 +1,459 @@
+:root {
+  --bg: #121212;
+  --surface: #1e1e1e;
+  --primary: #bb86fc;
+  --accent: #03dac6;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --border: #333333;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
+main {
+  background-color: var(--surface);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  width: 100%;
+  max-width: 800px;
+  animation: fadeIn 0.8s ease-out;
+}
+
+h1,
+h2 {
+  margin-bottom: 1rem;
+  color: var(--primary);
+  text-align: center;
+}
+
+section {
+  margin-bottom: 2rem;
+  animation: slideUp 0.8s ease-out;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  background-color: var(--surface);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: slideIn 0.8s ease-out;
+}
+
+form:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+label {
+  color: var(--text-secondary);
+}
+
+input[type="file"],
+input[type="url"] {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  transition: border-color 0.3s, transform 0.2s;
+}
+
+input[type="file"]:hover,
+input[type="url"]:hover {
+  transform: scale(1.02);
+}
+
+input[type="file"]:focus,
+input[type="url"]:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  accent-color: var(--accent);
+  transition: transform 0.2s;
+}
+
+input[type="checkbox"]:hover {
+  transform: scale(1.1);
+}
+
+button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+  color: var(--bg);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+canvas {
+  display: block;
+  background-color: #000;
+  border: 2px solid var(--border);
+  border-radius: 0.5rem;
+  margin: 0 auto;
+  animation: fadeIn 1s ease-in;
+}
+
+/* Load form: vertical layout */
+#load-form {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#load-form fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: none;
+  margin-bottom: 1rem;
+}
+
+/* Center the load input section */
+#load-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+#load-form fieldset {
+  align-items: center;
+  width: 100%;
+}
+
+/* Filter form: center filters and apply button on next row */
+#filter-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#filter-form fieldset {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  border: none;
+  margin-bottom: 1rem;
+}
+
+#filter-form button {
+  margin-top: 0.5rem;
+}
+
+/* Change the font of apply/load buttons (no highlight) */
+button,
+#filter-form button,
+#load-form button {
+  font-family: "Fira Mono", "Consolas", monospace;
+  font-size: 0.93rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: none;
+  background-color: var(--primary);
+  color: var(--bg);
+  padding: 0.5rem 1.1rem;
+  border-radius: 0.4rem;
+  /* Remove highlight/shadow */
+  box-shadow: none;
+}
+
+/* Decorate section cards and headings */
+section#filters,
+section#source {
+  background: linear-gradient(90deg, var(--surface) 80%, var(--accent) 120%);
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 10px rgba(3, 218, 198, 0.08);
+  padding: 1.5rem 1rem 1.2rem 1rem;
+  margin-bottom: 2rem;
+  border-left: 5px solid var(--primary);
+  animation: fadeIn 1s;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+section#filters h2 {
+  font-size: 1.3rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 8px #222;
+  font-family: "Montserrat", "Segoe UI", Arial, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+section#source h2 {
+  font-size: 1.25rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 8px #111;
+  font-family: "Fira Sans", "Segoe UI", Arial, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Style filter options */
+#filter-form fieldset {
+  background: rgba(187, 134, 252, 0.08);
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 1px 6px rgba(187, 134, 252, 0.07);
+  border: 1px solid var(--border);
+  font-family: "Fira Mono", "Consolas", monospace;
+}
+
+/* Style source file card */
+#load-form fieldset {
+  background: rgba(3, 218, 198, 0.06);
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 1px 6px rgba(3, 218, 198, 0.07);
+  border: 1px solid var(--border);
+  flex-direction: column;
+  gap: 1.2rem;
+  font-family: "Fira Mono", "Consolas", monospace;
+}
+
+/* Center the input boxes in the load image section */
+#load-form fieldset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background: rgba(187, 134, 252, 0.08); /* match choose filters background */
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 1px 6px rgba(187, 134, 252, 0.07);
+  border: 1px solid var(--border);
+  gap: 1.2rem;
+  font-family: "Fira Mono", "Consolas", monospace;
+}
+
+/* Arrange source file and URL in two rows */
+#load-form fieldset {
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.source-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  width: 100%;
+  margin-bottom: 0.1rem;
+}
+
+.source-row label {
+  min-width: 55px;
+  color: var(--primary);
+  font-weight: 500;
+  margin-right: 0.2rem; /* bring label closer to input */
+  font-size: 1rem;
+}
+
+/* Make input boxes smaller and centered */
+.source-row input[type="file"],
+.source-row input[type="url"] {
+  flex: 0 0 140px;
+  max-width: 140px;
+  min-width: 0;
+  padding: 0.32rem 0.6rem;
+  font-size: 0.95rem;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+  text-align: center;
+}
+
+/* Center the load button in the source section */
+#load-form button {
+  display: block;
+  margin: 1.2rem auto 0 auto;
+  /* Optional: add a little shadow for emphasis */
+  box-shadow: 0 2px 8px rgba(3, 218, 198, 0.12);
+}
+
+/* Fix the URL input section for better alignment and appearance */
+.source-row input[type="url"] {
+  flex: 1;
+  min-width: 0;
+  background: var(--bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-family: "Fira Mono", "Consolas", monospace;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.2s;
+}
+
+.source-row input[type="url"]:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+/* Optional: make sure file input matches style */
+.source-row input[type="file"] {
+  width: 100%;
+  max-width: 500px; /* or any max width you prefer */
+  min-width: 180px;
+  box-sizing: border-box;
+  font-family: "Fira Mono", "Consolas", monospace;
+  font-size: 1rem;
+  padding: 0.32rem 0.6rem;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.2s;
+}
+
+/* Make the "Choose File" button smaller and margins tighter */
+.source-row input[type="file"]::-webkit-file-upload-button,
+.source-row input[type="file"]::file-selector-button {
+  font-family: "Montserrat", "Segoe UI", Arial, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: var(--primary);
+  color: var(--bg);
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0.18rem 0.6rem;
+  margin: 0 0.2rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.source-row input[type="file"]::-webkit-file-upload-button:hover,
+.source-row input[type="file"]::file-selector-button:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* Make the radio switch margin and padding smaller and consistent */
+.source-switch-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+  padding: 0.2rem 0;
+  background: rgba(187, 134, 252, 0.13);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 4px rgba(187, 134, 252, 0.08);
+}
+
+.source-switch-row label {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  font-family: "Montserrat", "Segoe UI", Arial, sans-serif;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 0.97rem;
+  padding: 0.05rem 0.3rem;
+  border-radius: 0.3rem;
+  transition: background 0.2s, color 0.2s;
+  margin: 0; /* Remove extra margin */
+}
+
+.source-switch-row input[type="radio"] {
+  accent-color: var(--accent);
+  margin-right: 0.15em;
+  width: 1em;
+  height: 1em;
+}
+
+/* Optional: highlight selected switch */
+.source-switch-row input[type="radio"]:checked + span,
+.source-switch-row label:has(input[type="radio"]:checked) {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* Ensure inner file/url input and radio switch have the same border-radius as their container */
+.source-row input[type="file"],
+.source-row input[type="url"] {
+  border-radius: 0.5rem !important; /* Match fieldset and section */
+}
+
+/* Style the "Choose File" button with matching border-radius */
+.source-row input[type="file"]::-webkit-file-upload-button,
+.source-row input[type="file"]::file-selector-button {
+  border-radius: 0.5rem !important; /* Match outer container */
+}
+
+/* Make radio switch labels and row match the same curve */
+.source-switch-row,
+.source-switch-row label {
+  border-radius: 0.5rem !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
